@@ -18,10 +18,11 @@ import {
     listAllComments,
     updateComment
 } from "../controller/comment.js";
+import { createPostValidation } from "../utils/validator.js";
 
 const router = express.Router();
 
-router.post('/', verifyUser, createPost);
+router.post('/', createPostValidation, verifyUser, createPost);
 router.put('/:id', verifyUser, updatePost);
 router.delete('/:id', verifyUser, deletePost);
 router.get('/:id', verifyUser, getPostById);

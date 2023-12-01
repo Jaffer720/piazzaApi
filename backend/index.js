@@ -5,7 +5,6 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRoute from "./routes/authRoute.js";
 import postRoute from "./routes/postRoute.js"
-import reactionRoute from "./routes/reactionRoute.js";
 
 
 const app = express();
@@ -33,7 +32,6 @@ app.use(express.json());
 //Routes
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
-app.use("/api/reaction", reactionRoute);
 
 
 app.listen(process.env.PORT, () => {

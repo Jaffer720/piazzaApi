@@ -1,8 +1,5 @@
 import mongoose from 'mongoose';
 import Post from '../models/Post.js';
-import Reaction from '../models/Reaction.js';
-import Comment from '../models/Comment.js';
-
 
 export const createPost = async (req, res) => {
     const authenticatedUser = req.user;
@@ -41,8 +38,6 @@ export const createPost = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
-
-
 
 
 export const updatePost = async (req, res) => {
@@ -88,16 +83,6 @@ export const updatePost = async (req, res) => {
         // Save the updated post
         await existingPost.save();
 
-        // if (updatedValues.expirationTime) {
-        //     const currentTime = Date.now();
-        //     const timeUntilExpiration = updatedValues.expirationTime - currentTime;
-
-        //     setTimeout(async () => {
-        //         // Update the post status to "Expired" after the defined expirationTime
-        //         await Post.findByIdAndUpdate(postId, { status: 'Expired' });
-        //     }, timeUntilExpiration);
-        // }
-
         res.status(200).json({ success: true, message: 'Post updated successfully', updatedValues });
     } catch (error) {
         console.error(error);
@@ -114,6 +99,13 @@ export const deletePost = async (req, res) => {
 
         const post = await Post.findById(postId);
 
+        const errors = validationResult(req);
+
+        // Check if there are validation errors
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ success: false, errors: errors.array() });
+        }
+        
         if (!post) {
             return res.status(404).json({ success: false, message: 'Post not found' });
         }
@@ -139,6 +131,7 @@ export const deletePost = async (req, res) => {
     }
 };
 
+
 export const getPostById = async (req, res) => {
     try {
         const postId = req.params.id;
@@ -155,6 +148,7 @@ export const getPostById = async (req, res) => {
         res.status(500).json({ success: false, message: error.message });
     }
 };
+
 
 export const getAllPosts = async (req, res) => {
     const allowedTopics = ['Politics', 'Health', 'Sport', 'Tech'];
