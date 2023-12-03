@@ -4,8 +4,10 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRoute from "./routes/authRoute.js";
-import postRoute from "./routes/postRoute.js"
-
+import postRoute from "./routes/postRoute.js";
+// import config from "./config";
+import User from './models/User.js'
+import oauth from "./routes/oauth.js"
 
 const app = express();
 dotenv.config();
@@ -23,6 +25,9 @@ mongoose.connection.on("disconnected", () => {
     console.log("mongoDB disconnected!");
 });
 
+
+
+
 //middlewares
 app.use(cors());
 app.use(cookieParser());
@@ -32,6 +37,7 @@ app.use(express.json());
 //Routes
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
+app.use("/oauth",oauth)
 
 
 app.listen(process.env.PORT, () => {
