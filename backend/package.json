@@ -29,6 +29,7 @@
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.29.4",
     "mongodb": "^6.0.0",
-    "mongoose": "^7.5.0"
+    "mongoose": "^7.5.0",
+    "selfsigned": "^2.4.1"
   }
 }

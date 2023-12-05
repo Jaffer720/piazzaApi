@@ -34,7 +34,6 @@ export const createPost = async (req, res) => {
 
         res.status(201).json({ success: true, message: 'Post created successfully', newPost });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -85,7 +84,6 @@ export const updatePost = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Post updated successfully', updatedValues });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -126,7 +124,6 @@ export const deletePost = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Post deleted successfully' });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -135,7 +132,6 @@ export const deletePost = async (req, res) => {
 export const getPostById = async (req, res) => {
     try {
         const postId = req.params.id;
-        console.log("postID", postId);
         const post = await Post.findById(postId);
 
         if (!post) {
@@ -144,7 +140,6 @@ export const getPostById = async (req, res) => {
 
         res.status(200).json({ success: true, post });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -166,31 +161,9 @@ export const getAllPosts = async (req, res) => {
 
         res.status(200).json({ success: true, posts });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
 
 
-export const getAllPostsByTopic = async (req, res) => {
-    try {
-        const selectedTopic = req.params.topic; // Assuming you are getting the topic from the request parameters
-
-        // Validate if the selected topic is one of the allowed topics
-        const allowedTopics = ['Politics', 'Health', 'Sport', 'Tech'];
-        if (!allowedTopics.includes(selectedTopic)) {
-            return res.status(400).json({ success: false, message: 'Invalid topic' });
-        }
-
-        // Retrieve all posts with the selected topic
-        const posts = await Post.find({ topics: selectedTopic, status: 'Live' })
-            .populate('owner', 'username') // Populate the 'owner' field with the 'username' attribute from the User model
-            .populate('likes dislikes comments'); // Populate other referenced fields as needed
-
-        res.status(200).json({ success: true, posts });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: error.message });
-    }
-};
 

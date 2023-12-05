@@ -3,7 +3,6 @@ import verifyUser from '../utils/verifyUser.js';
 import {
     createPost,
     updatePost,
-    getAllPostsByTopic,
     deletePost,
     getPostById,
     getAllPosts
@@ -26,7 +25,6 @@ router.post('/', createPostValidation, verifyUser, createPost);
 router.put('/:id', verifyUser, updatePost);
 router.delete('/:id', verifyUser, deletePost);
 router.get('/:id', verifyUser, getPostById);
-router.get('/:topic', verifyUser, getAllPostsByTopic);
 router.get('/', verifyUser, getAllPosts);
 
 // Interactions

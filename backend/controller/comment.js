@@ -24,7 +24,6 @@ export const createComment = async (req, res) => {
 
             formattedTimeLeft = moment.utc(moment.duration(post.expirationTime - currentTime).asMilliseconds()).format("HH:mm:ss", { trim: false });
 
-            console.log("Time Left for Post: ", formattedTimeLeft);
         }
 
         // Check if the user is the owner of the post
@@ -51,7 +50,7 @@ export const createComment = async (req, res) => {
 
         res.status(201).json({ success: true, message: 'Comment added successfully', comment: post.comments });
     } catch (error) {
-        console.error(error);
+
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -61,7 +60,6 @@ export const updateComment = async (req, res) => {
         const authenticatedUser = req.user;
         const postId = req.params.id;
         const commentId = req.params.commentId;
-        console.log(commentId)
         const updatedBody = req.body.body;
 
         // Check if the post exists
@@ -99,7 +97,7 @@ export const updateComment = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Comment updated successfully', updatedComment: commentToUpdate });
     } catch (error) {
-        console.error(error);
+
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -138,7 +136,7 @@ export const deleteComment = async (req, res) => {
 
         res.status(200).json({ success: true, message: 'Comment deleted successfully' });
     } catch (error) {
-        console.error(error);
+
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -158,7 +156,7 @@ export const listAllComments = async (req, res) => {
 
         res.status(200).json({ success: true, comments });
     } catch (error) {
-        console.error(error);
+
         res.status(500).json({ success: false, message: error.message });
     }
 };

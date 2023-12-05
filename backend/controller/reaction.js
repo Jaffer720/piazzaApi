@@ -24,7 +24,6 @@ export const createReaction = async (req, res) => {
 
             formattedTimeLeft = moment.utc(moment.duration(post.expirationTime - currentTime).asMilliseconds()).format("HH:mm:ss", { trim: false });
 
-            console.log("Time Left for Post: ", formattedTimeLeft);
         }
         // Check if the user has already reacted to the post
         const existingReactionIndex = post.reactions.findIndex(
@@ -88,7 +87,6 @@ export const createReaction = async (req, res) => {
             });
         }
     } catch (error) {
-        console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 };
@@ -113,7 +111,6 @@ export const listReactions = async (req, res) => {
 
         res.status(200).json({ success: true, reactions });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ success: false, message: error.message });
     }
 };

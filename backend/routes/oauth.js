@@ -1,43 +1,65 @@
 import express, { response } from "express";
+import User from '../models/User.js';
 import { config } from '../config.js';
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv"
 import pkg from 'google-auth-library';
 const { google } = pkg;
 import { OAuth2Client } from "google-auth-library";
 
-
+dotenv.config();
 const router = express.Router();
-
-async function getUserData(access_token) {
-
-    const response = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${access_token}`);
-
-    //console.log('response',response);
-    const data = await response.json();
-    console.log('data', data);
-    
-}
+const jwtSecretKey = process.env.JWT_SECRET;
 
 router.get('/', async (req, res) => {
-    console.log("I am here")
     try {
         const code = req.query.code;
-        // const googleClient = new OAuth2Client(config.google.clientId, config.google.clientSecret, config.google.redirectUri);
         const oAuth2Client = new OAuth2Client(
             config.google.clientId,
             config.google.clientSecret,
-            config.google.redirectUri
+            config.google.redirectUri,
+
 
         );
-        // Exchange the authorization code for tokens
+
         const r = await oAuth2Client.getToken(code);
         await oAuth2Client.setCredentials(r.tokens);
-        console.info('Tokens acquired.');
-        const user = oAuth2Client.credentials;
-        console.log('credentials', user);
-        await getUserData(oAuth2Client.credentials.access_token);
-        res.status(200).send({message:"authentication Successfull"});
+
+        const ticket = await oAuth2Client.verifyIdToken({
+            idToken: oAuth2Client.credentials.id_token,
+            audience: config.google.clientId,
+        });
+
+        const payload = ticket.getPayload();
+        const user = await User.findOne({ googleId: payload.sub });
+
+        if (!user) {
+
+            const newUser = new User({
+                googleId: payload.sub,
+                name: payload.name,
+
+            });
+
+            await newUser.save();
+            const accessToken = jwt.sign(
+                { userId: newUser._id },
+                jwtSecretKey,
+            );
+            res.cookie("access_token", accessToken, {
+                httpOnly: true,
+            });
+            return res.status(201).send({ message: 'User Registered succecfuly and get token', newUser });
+        }
+        const accessToken = jwt.sign(
+            { userId: user._id },
+            jwtSecretKey,
+        );
+        res.cookie("access_token", accessToken, {
+            httpOnly: true,
+        });
+        res.status(201).send({ message: 'User athenticated succecfuly and get token', user });
     } catch (error) {
-        console.error(error);
         res.status(500).send({ message: error.message });
     }
 });
