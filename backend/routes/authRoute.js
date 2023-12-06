@@ -7,7 +7,7 @@ import { OAuth2Client } from "google-auth-library";
 const router = express.Router();
 
 router.post('/', (req, res) => {
-    res.header("Access-Control-Allow-Origin", 'http://localhost:5173');
+    res.header("Access-Control-Allow-Origin");
     res.header("Access-Control-Allow-Credentials", 'true');
     res.header("Referrer-Policy", "no-referrer-when-downgrade");
 

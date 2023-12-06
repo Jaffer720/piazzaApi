@@ -1,0 +1,601 @@
+{
+	"info": {
+		"_postman_id": "d282d5a2-045b-4615-8760-c2dd3a6f6095",
+		"name": "PiazzaApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29562665",
+		"_collection_link": "https://galactic-zodiac-668717.postman.co/workspace/My-Workspace~eacfc21a-ff80-4c3d-8434-99a9d6554582/collection/29562665-d282d5a2-045b-4615-8760-c2dd3a6f6095?action=share&source=collection_link&creator=29562665"
+	},
+	"item": [
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "create Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response status code is 201', function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response should be successful', function () {\r",
+									"    pm.response.to.have.jsonBody('success', true);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response should contain newPost object', function () {\r",
+									"    pm.response.to.have.jsonBody('newPost');\r",
+									"})\r",
+									"\r",
+									"pm.test('Check specific values for properties', function () {\r",
+									"    pm.response.to.have.jsonBody('newPost.title', 'Sample Post6');\r",
+									"    pm.response.to.have.jsonBody('newPost.topics', ['Politics']);\r",
+									"    pm.response.to.have.jsonBody('newPost.status', 'Live');\r",
+									"})\r",
+									"\r",
+									"pm.test('Response should be successful', function () {\r",
+									"    pm.response.to.have.jsonBody('success', true);\r",
+									"})\r",
+									"\r",
+									"pm.test('Response should contain newPost object', function () {\r",
+									"    pm.response.to.have.jsonBody('newPost');\r",
+									"})\r",
+									"\r",
+									"var newPost = pm.response.json().newPost;\r",
+									"\r",
+									"pm.test('NewPost object should have all required keys', function () {\r",
+									"    pm.expect(newPost).to.have.property('title');\r",
+									"    pm.expect(newPost).to.have.property('topics');\r",
+									"    pm.expect(newPost).to.have.property('timestamp');\r",
+									"    pm.expect(newPost).to.have.property('body');\r",
+									"    pm.expect(newPost).to.have.property('expirationTime');\r",
+									"    pm.expect(newPost).to.have.property('status');\r",
+									"    pm.expect(newPost).to.have.property('owner');\r",
+									"    pm.expect(newPost).to.have.property('likeCount');\r",
+									"    pm.expect(newPost).to.have.property('dislikeCount');\r",
+									"    pm.expect(newPost).to.have.property('commentCount');\r",
+									"    pm.expect(newPost).to.have.property('_id');\r",
+									"    pm.expect(newPost).to.have.property('reactions');\r",
+									"    pm.expect(newPost).to.have.property('comments');\r",
+									"    pm.expect(newPost).to.have.property('__v');\r",
+									"})\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"Sample Post7\",\r\n  \"topics\": \"Politics\",\r\n  \"body\": \"This is a sample post body for politics.\",\r\n  \"expirationTime\": \"2023-11-27T20:45:00Z\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllPostsByQuery Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\":\"Sample Post2\",\r\n    \"topic\":\"Health\",\r\n    \"body\": \"This is a sample post on topic Health body.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6561136773d65b60b4992d20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "656113880390cf3221b38fef"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPostById Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is present and has a boolean value\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property('success');\r",
+									"    pm.expect(responseData.success).to.be.a('boolean');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Post object contains all required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.post).to.be.an('object');\r",
+									"    pm.expect(responseData.post).to.include.all.keys(\r",
+									"        'likeCount', 'dislikeCount', 'commentCount', 'title', 'topics', 'body', \r",
+									"        'expirationTime', 'status', 'owner', 'likes', 'dislikes', 'comments', \r",
+									"        'timestamp', '__v', 'reactions'\r",
+									"    );\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Topics array is present and not empty\", function () {\r",
+									"    const responseData = pm.response.json().post;\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.topic).to.exist.and.to.be.an('array').and.to.have.lengthOf.at.least(1, \"Topics array should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Timestamp is in a valid date format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"Timestamp should be in valid date format\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/post/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65634f0662c336126dd57271"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reaction",
+			"item": [
+				{
+					"name": "create Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"like\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65634f0662c336126dd57271"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllRections Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is present and set to true\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.have.property('success', true);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Reactions array is present and contains at least one element\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.reactions).to.exist.and.to.be.an('array').that.is.not.empty;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Timestamp is in a valid date format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    const timestamp = responseData.reactions.timestamp;\r",
+									"    \r",
+									"    pm.expect(responseData.reactions).to.be.an('array');\r",
+									"    pm.expect(reactions.reactions.timestamp).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{3}Z$/, \"Timestamp should be in valid date format\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/post/list/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								"list",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6561131838adc5891b791ca4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "create Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"type\": \"like\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "65634f0662c336126dd57271"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Success field is true\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.have.property('success', true);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Message field should not be empty\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.message).to.not.equal(\"\");\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"body\":\"just looking like a wow\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/comment/:id/:commentId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								"comment",
+								":id",
+								":commentId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6561131838adc5891b791ca4"
+								},
+								{
+									"key": "commentId",
+									"value": "6564e0f874dbc2854a82dfa3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Copy",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/post/comment/:id/:commentId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								"comment",
+								":id",
+								":commentId"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6561131838adc5891b791ca4"
+								},
+								{
+									"key": "commentId",
+									"value": "6564e0f874dbc2854a82dfa3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllComment Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/api/post/list/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"post",
+								"list",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
